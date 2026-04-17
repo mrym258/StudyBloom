@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyBloom — Your Exam Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&family=Orbitron:wght@400;600;700&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   THEME SYSTEM — CSS Custom Properties
+═══════════════════════════════════════════ */
+
+/* ── GARDEN / COTTAGECORE (DEFAULT) ── */
+[data-theme="garden"] {
+  --bg: #fdf8f2; --bg2: #f7eedf; --bg3: #ede0cc;
+  --surface: #fffcf8; --surface2: #fef6ee;
+  --border: rgba(180,140,100,0.2); --border2: rgba(180,140,100,0.4);
+  --accent: #d4728a; --accent2: #9abf94; --accent3: #c5b8e8;
+  --accent-light: #fceef2; --accent2-light: #eaf4e7; --accent3-light: #f0ecfa;
+  --text: #3d2b1a; --text2: #7a5c3e; --text3: #b8956a;
+  --danger: #c0392b; --success: #27ae60; --warning: #e67e22;
+  --card-shadow: 0 2px 20px rgba(120,80,40,0.08);
+  --radius: 14px; --radius-sm: 8px; --radius-lg: 20px;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: linear-gradient(135deg, #fce8ee 0%, #f5edf8 35%, #eaf4e7 70%, #fdf5dc 100%);
+  --nav-bg: #fffcf8; --tab-active-bg: #fceef2; --tab-active-color: #7a2d45;
+  --btn-primary-bg: #d4728a; --btn-primary-color: #fff;
+  --btn-secondary-bg: #eaf4e7; --btn-secondary-color: #2e5c28;
+  --input-bg: #fdf8f2; --input-focus: #d4728a;
+  --progress-track: #ede0cc; --progress-fill: linear-gradient(90deg,#d4728a,#c5b8e8);
+  --tag-bg: #fceef2; --tag-color: #7a2d45;
+  --header-deco: "✿"; --scatter: "❀ ✿ ❁ ✾";
+}
+
+/* ── WHIMSICAL ── */
+[data-theme="whimsical"] {
+  --bg: #fff9fe; --bg2: #f5e6ff; --bg3: #e8d0ff;
+  --surface: #ffffff; --surface2: #fdf0ff;
+  --border: rgba(160,80,220,0.2); --border2: rgba(160,80,220,0.4);
+  --accent: #b040e0; --accent2: #ff6eb4; --accent3: #40c8e0;
+  --accent-light: #f5e6ff; --accent2-light: #ffe4f2; --accent3-light: #e4f8ff;
+  --text: #2a0a3a; --text2: #7a3a9a; --text3: #c080e0;
+  --danger: #e040a0; --success: #40c060; --warning: #ffb020;
+  --card-shadow: 0 4px 24px rgba(160,80,220,0.12);
+  --radius: 20px; --radius-sm: 12px; --radius-lg: 28px;
+  --font-display: 'Raleway', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: linear-gradient(135deg, #f5e6ff 0%, #ffe4f8 40%, #e4f0ff 80%, #e4fff4 100%);
+  --nav-bg: #fff9fe; --tab-active-bg: #f5e6ff; --tab-active-color: #7a10b0;
+  --btn-primary-bg: #b040e0; --btn-primary-color: #fff;
+  --btn-secondary-bg: #ffe4f2; --btn-secondary-color: #b0204a;
+  --input-bg: #fff9fe; --input-focus: #b040e0;
+  --progress-track: #e8d0ff; --progress-fill: linear-gradient(90deg,#b040e0,#ff6eb4);
+  --tag-bg: #f5e6ff; --tag-color: #7a10b0;
+  --header-deco: "★"; --scatter: "🌟 ⭐ ✨ 💫";
+}
+
+/* ── CARS ── */
+[data-theme="cars"] {
+  --bg: #0d0d0d; --bg2: #1a1a1a; --bg3: #252525;
+  --surface: #1a1a1a; --surface2: #222222;
+  --border: rgba(255,80,0,0.25); --border2: rgba(255,80,0,0.5);
+  --accent: #ff4500; --accent2: #ff8c00; --accent3: #c0c0c0;
+  --accent-light: rgba(255,69,0,0.12); --accent2-light: rgba(255,140,0,0.1); --accent3-light: rgba(192,192,192,0.1);
+  --text: #f0f0f0; --text2: #b0b0b0; --text3: #707070;
+  --danger: #ff2020; --success: #40ff60; --warning: #ffb020;
+  --card-shadow: 0 4px 28px rgba(255,69,0,0.15);
+  --radius: 6px; --radius-sm: 4px; --radius-lg: 10px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: linear-gradient(135deg, #1a0800 0%, #2a0e00 50%, #0d0d0d 100%);
+  --nav-bg: #111111; --tab-active-bg: rgba(255,69,0,0.15); --tab-active-color: #ff4500;
+  --btn-primary-bg: #ff4500; --btn-primary-color: #fff;
+  --btn-secondary-bg: rgba(192,192,192,0.1); --btn-secondary-color: #c0c0c0;
+  --input-bg: #1a1a1a; --input-focus: #ff4500;
+  --progress-track: #333; --progress-fill: linear-gradient(90deg,#ff4500,#ff8c00);
+  --tag-bg: rgba(255,69,0,0.15); --tag-color: #ff6030;
+  --header-deco: "⚡"; --scatter: "🏎 ⚡ 🔥 💨";
+}
+
+/* ── AVENGERS ── */
+[data-theme="avengers"] {
+  --bg: #0a0a1a; --bg2: #0d0d22; --bg3: #12122e;
+  --surface: #0d0d22; --surface2: #12122e;
+  --border: rgba(180,0,0,0.3); --border2: rgba(180,0,0,0.6);
+  --accent: #c00; --accent2: #ffd700; --accent3: #4080ff;
+  --accent-light: rgba(200,0,0,0.12); --accent2-light: rgba(255,215,0,0.1); --accent3-light: rgba(64,128,255,0.1);
+  --text: #e8e8f0; --text2: #9090b0; --text3: #606080;
+  --danger: #ff2020; --success: #60ff40; --warning: #ffd700;
+  --card-shadow: 0 4px 28px rgba(200,0,0,0.2);
+  --radius: 4px; --radius-sm: 2px; --radius-lg: 8px;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: linear-gradient(135deg, #0a0a1a 0%, #1a0000 50%, #0a0a2a 100%);
+  --nav-bg: #08081a; --tab-active-bg: rgba(200,0,0,0.18); --tab-active-color: #ff4040;
+  --btn-primary-bg: #c00; --btn-primary-color: #fff;
+  --btn-secondary-bg: rgba(255,215,0,0.1); --btn-secondary-color: #ffd700;
+  --input-bg: #0d0d22; --input-focus: #c00;
+  --progress-track: #1a1a2e; --progress-fill: linear-gradient(90deg,#c00,#ffd700);
+  --tag-bg: rgba(200,0,0,0.15); --tag-color: #ff5050;
+  --header-deco: "⚔"; --scatter: "🛡 ⚡ 🔱 ★";
+}
+
+/* ── AESTHETIC MINIMAL ── */
+[data-theme="minimal"] {
+  --bg: #fafafa; --bg2: #f3f3f3; --bg3: #e8e8e8;
+  --surface: #ffffff; --surface2: #f7f7f7;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.15);
+  --accent: #1a1a1a; --accent2: #555; --accent3: #888;
+  --accent-light: #f3f3f3; --accent2-light: #ebebeb; --accent3-light: #f0f0f0;
+  --text: #111; --text2: #555; --text3: #999;
+  --danger: #e53e3e; --success: #38a169; --warning: #d69e2e;
+  --card-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  --radius: 8px; --radius-sm: 4px; --radius-lg: 12px;
+  --font-display: 'Crimson Pro', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: #fafafa;
+  --nav-bg: #ffffff; --tab-active-bg: #f3f3f3; --tab-active-color: #111;
+  --btn-primary-bg: #1a1a1a; --btn-primary-color: #fff;
+  --btn-secondary-bg: #f3f3f3; --btn-secondary-color: #333;
+  --input-bg: #fafafa; --input-focus: #1a1a1a;
+  --progress-track: #e8e8e8; --progress-fill: linear-gradient(90deg,#1a1a1a,#555);
+  --tag-bg: #f3f3f3; --tag-color: #333;
+  --header-deco: "—"; --scatter: "· · ·";
+}
+
+/* ── NERDY ── */
+[data-theme="nerdy"] {
+  --bg: #0a0f0a; --bg2: #0d140d; --bg3: #101a10;
+  --surface: #0d140d; --surface2: #111811;
+  --border: rgba(0,220,80,0.2); --border2: rgba(0,220,80,0.4);
+  --accent: #00dc50; --accent2: #00b040; --accent3: #80ff40;
+  --accent-light: rgba(0,220,80,0.08); --accent2-light: rgba(0,176,64,0.08); --accent3-light: rgba(128,255,64,0.08);
+  --text: #c0ffc0; --text2: #70c070; --text3: #408040;
+  --danger: #ff4040; --success: #00dc50; --warning: #ffcc00;
+  --card-shadow: 0 0 20px rgba(0,220,80,0.1);
+  --radius: 4px; --radius-sm: 2px; --radius-lg: 6px;
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: #0a0f0a;
+  --nav-bg: #080d08; --tab-active-bg: rgba(0,220,80,0.1); --tab-active-color: #00dc50;
+  --btn-primary-bg: #00b040; --btn-primary-color: #000;
+  --btn-secondary-bg: rgba(0,220,80,0.08); --btn-secondary-color: #00dc50;
+  --input-bg: #0d140d; --input-focus: #00dc50;
+  --progress-track: #1a2a1a; --progress-fill: linear-gradient(90deg,#00dc50,#80ff40);
+  --tag-bg: rgba(0,220,80,0.1); --tag-color: #00dc50;
+  --header-deco: ">_"; --scatter: "// { } => []";
+}
+
+/* ── COOL ── */
+[data-theme="cool"] {
+  --bg: #06101e; --bg2: #0a1828; --bg3: #0e2035;
+  --surface: #0a1828; --surface2: #0e2035;
+  --border: rgba(64,180,255,0.2); --border2: rgba(64,180,255,0.4);
+  --accent: #40b4ff; --accent2: #00e8c8; --accent3: #8060ff;
+  --accent-light: rgba(64,180,255,0.1); --accent2-light: rgba(0,232,200,0.08); --accent3-light: rgba(128,96,255,0.1);
+  --text: #d0eeff; --text2: #6090b0; --text3: #304860;
+  --danger: #ff4060; --success: #00e8c8; --warning: #ffcc40;
+  --card-shadow: 0 4px 24px rgba(64,180,255,0.12);
+  --radius: 12px; --radius-sm: 6px; --radius-lg: 18px;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --hero-bg: linear-gradient(135deg, #06101e 0%, #0a1828 50%, #080e20 100%);
+  --nav-bg: #060e1a; --tab-active-bg: rgba(64,180,255,0.12); --tab-active-color: #40b4ff;
+  --btn-primary-bg: #40b4ff; --btn-primary-color: #06101e;
+  --btn-secondary-bg: rgba(0,232,200,0.1); --btn-secondary-color: #00e8c8;
+  --input-bg: #0a1828; --input-focus: #40b4ff;
+  --progress-track: #0e2035; --progress-fill: linear-gradient(90deg,#40b4ff,#00e8c8);
+  --tag-bg: rgba(64,180,255,0.1); --tag-color: #40b4ff;
+  --header-deco: "◈"; --scatter: "◈ ◆ ▸ ◉";
+}
+
+/* ═══════════════════════════════════════════
+   BASE RESET & GLOBALS
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.4s;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 10px; }
+::selection { background: var(--accent); color: var(--btn-primary-color); }
+
+/* ═══════════════ PRIVACY BANNER ═══════════════ */
+.privacy-banner {
+  background: var(--accent2-light);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.privacy-banner .lock-icon { font-size: 13px; }
+.privacy-banner button {
+  background: none; border: none; cursor: pointer;
+  color: var(--text3); font-size: 14px; margin-left: 8px; line-height: 1;
+}
+
+/* ═══════════════ THEME BAR ═══════════════ */
+.theme-bar {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.theme-bar-left { display: flex; align-items: center; gap: 10px; }
+.app-logo { font-family: var(--font-display); font-size: 18px; color: var(--accent); font-weight: 600; letter-spacing: 1px; }
+.theme-select-wrap { display: flex; align-items: center; gap: 8px; }
+.theme-select-wrap label { font-size: 11px; color: var(--text3); }
+.theme-select {
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  background: var(--bg2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  padding: 5px 10px;
+  cursor: pointer;
+  outline: none;
+}
+.theme-select:focus { border-color: var(--accent); }
+.reset-btn {
+  background: none; border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  color: var(--text3); font-size: 11px; padding: 5px 10px; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.2s;
+}
+.reset-btn:hover { color: var(--danger); border-color: var(--danger); }
+
+/* ═══════════════ NAV TABS ═══════════════ */
+.nav-tabs {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.nav-tab {
+  flex: 1; padding: 12px 8px; text-align: center;
+  font-size: 11px; font-weight: 500; color: var(--text3);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.25s; letter-spacing: 0.5px; user-select: none;
+  font-family: var(--font-body);
+}
+.nav-tab:hover { color: var(--text2); background: var(--bg2); }
+.nav-tab.active { color: var(--tab-active-color); border-bottom-color: var(--accent); background: var(--tab-active-bg); }
+.nav-tab .tab-icon { display: block; font-size: 17px; margin-bottom: 2px; }
+
+/* ═══════════════ PANELS ═══════════════ */
+.panel { display: none; animation: panelIn 0.3s ease; }
+.panel.active { display: block; }
+@keyframes panelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.app { max-width: 920px; margin: 0 auto; padding: 0 0 80px; }
+
+/* ═══════════════ HERO ═══════════════ */
+.hero {
+  background: var(--hero-bg);
+  padding: 36px 24px 28px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.hero-deco { position: absolute; font-size: 72px; opacity: 0.05; top: -10px; font-family: var(--font-display); pointer-events: none; }
+.hero-deco.l { left: -8px; } .hero-deco.r { right: -8px; }
+.hero-tag { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; font-family: var(--font-body); }
+.hero h1 { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--accent); line-height: 1.2; margin-bottom: 4px; }
+.hero-sub { font-size: 12px; color: var(--text2); margin-bottom: 16px; font-style: italic; }
+.sgpa-strip { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.sgpa-pill {
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 20px;
+  padding: 5px 14px; font-size: 11px; color: var(--text2);
+}
+.sgpa-pill strong { color: var(--accent); font-weight: 500; }
+.sgpa-pill.target { background: var(--accent-light); border-color: var(--accent); color: var(--tab-active-color); }
+
+/* ═══════════════ SECTION HEADER ═══════════════ */
+.sec-wrap { padding: 20px 20px 0; }
+.sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.sec-head h2 { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--accent); white-space: nowrap; }
+.sec-head::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+/* ═══════════════ CARDS ═══════════════ */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.12); }
+
+/* ═══════════════ BUTTONS ═══════════════ */
+.btn {
+  border: none; border-radius: var(--radius-sm); padding: 9px 18px;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.2s; white-space: nowrap;
+}
+.btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-color); }
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-secondary { background: var(--btn-secondary-bg); color: var(--btn-secondary-color); border: 1px solid var(--border2); }
+.btn-secondary:hover { opacity: 0.88; }
+.btn-danger { background: rgba(200,0,0,0.1); color: var(--danger); border: 1px solid rgba(200,0,0,0.2); }
+.btn-danger:hover { background: var(--danger); color: #fff; }
+.btn-sm { padding: 5px 12px; font-size: 11px; }
+.btn-icon { padding: 6px 8px; font-size: 14px; }
+
+/* ═══════════════ FORM ELEMENTS ═══════════════ */
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 5px; display: block; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  padding: 9px 12px; font-size: 13px; background: var(--input-bg); color: var(--text);
+  font-family: var(--font-body); outline: none; transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--input-focus); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text3); }
+.form-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media(max-width:600px) { .form-row, .form-row-3 { grid-template-columns: 1fr; } }
+
+/* ═══════════════ ONBOARDING ═══════════════ */
+#onboarding-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 20px; background: var(--bg);
+}
+.onboard-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+  max-width: 700px; width: 100%;
+  box-shadow: var(--card-shadow);
+}
+.onboard-logo { font-family: var(--font-display); font-size: 28px; color: var(--accent); text-align: center; margin-bottom: 6px; }
+.onboard-sub { font-size: 13px; color: var(--text2); text-align: center; margin-bottom: 24px; font-style: italic; }
+.onboard-step { display: none; }
+.onboard-step.active { display: block; animation: panelIn 0.3s ease; }
+.step-title { font-family: var(--font-display); font-size: 18px; color: var(--accent); margin-bottom: 4px; }
+.step-desc { font-size: 12px; color: var(--text3); margin-bottom: 20px; }
+.step-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+.step-dots { display: flex; gap: 6px; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bg3); transition: background 0.3s; }
+.step-dot.active { background: var(--accent); }
+
+/* ── SGPA FIELDS ── */
+.sgpa-fields { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.sgpa-field-row { display: flex; align-items: center; gap: 6px; }
+.sgpa-field-row label { font-size: 11px; color: var(--text3); white-space: nowrap; }
+.sgpa-field-row input { width: 70px; }
+.add-sgpa-btn { font-size: 11px; }
+
+/* ── SUBJECT FORM ── */
+.subject-forms { display: flex; flex-direction: column; gap: 12px; max-height: 55vh; overflow-y: auto; padding-right: 4px; }
+.subject-form-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; position: relative;
+}
+.subject-form-card .remove-sub { position: absolute; top: 10px; right: 10px; }
+.subject-form-title { font-size: 12px; font-weight: 500; color: var(--accent); margin-bottom: 10px; }
+
+/* ═══════════════ COUNTDOWN ═══════════════ */
+.cd-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 4px 20px 16px; scrollbar-width: none; }
+.cd-scroll::-webkit-scrollbar { display: none; }
+.cd-card {
+  min-width: 108px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 10px; text-align: center;
+  flex-shrink: 0; transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default; box-shadow: var(--card-shadow);
+}
+.cd-card:hover { transform: translateY(-3px); }
+.cd-card.next { border-color: var(--accent); background: var(--accent-light); }
+.cd-card.done { background: var(--accent2-light); border-color: var(--accent2); opacity: 0.85; }
+.cd-card.today { border-color: var(--warning); background: rgba(255,180,0,0.08); }
+.cd-num { font-family: var(--font-display); font-size: 30px; font-weight: 600; line-height: 1; color: var(--accent); }
+.cd-card.done .cd-num { font-size: 20px; color: var(--success); }
+.cd-unit { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); margin-bottom: 6px; }
+.cd-subj { font-size: 10px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.cd-date { font-size: 9px; color: var(--text3); }
+.cd-score-disp { font-size: 11px; font-weight: 500; color: var(--success); margin-top: 4px; }
+
+/* ═══════════════ SUBJECT OVERVIEW GRID ═══════════════ */
+.sub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.sub-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; position: relative;
+  overflow: hidden; cursor: pointer;
+  box-shadow: var(--card-shadow); transition: all 0.25s;
+}
+.sub-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.sub-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.sub-card h4 { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 5px; line-height: 1.3; margin-top: 6px; }
+.sub-card .int-marks { font-size: 10px; color: var(--text2); margin-bottom: 8px; }
+.sub-card .int-marks b { color: var(--accent); }
+.sub-prog-bar { height: 4px; background: var(--progress-track); border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+.sub-prog-fill { height: 100%; background: var(--progress-fill); border-radius: 4px; transition: width 0.5s; }
+.sub-prog-pct { font-size: 10px; color: var(--text3); }
+.sub-exam-dt { font-size: 9px; color: var(--text3); margin-top: 6px; }
+.sub-goal-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--accent-light); color: var(--tab-active-color);
+  font-size: 8px; font-weight: 600; padding: 2px 6px; border-radius: 8px;
+  border: 1px solid var(--accent); white-space: nowrap;
+}
+
+/* ═══════════════ STATS ═══════════════ */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; padding: 0 20px 16px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; box-shadow: var(--card-shadow); }
+.stat-num { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--accent); }
+.stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+/* ═══════════════ GRADE CALC CARD ═══════════════ */
+.calc-card { margin: 0 20px 16px; }
+.calc-card h4 { font-family: var(--font-display); font-size: 15px; color: var(--text); margin-bottom: 12px; }
+.calc-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.calc-subj { font-size: 12px; color: var(--text2); min-width: 170px; }
+.grade-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 8px; }
+.grade-s { background: rgba(255,200,0,0.15); color: #c08000; border: 1px solid rgba(255,200,0,0.3); }
+.grade-a { background: var(--accent3-light); color: var(--accent3); border: 1px solid var(--accent3); opacity: 0.8; }
+.grade-b { background: var(--accent2-light); color: var(--accent2); border: 1px solid var(--accent2); opacity: 0.8; }
+.grade-done { background: var(--accent2-light); color: var(--success); border: 1px solid var(--success); }
+
+/* ═══════════════ TIMETABLE ═══════════════ */
+.day-block {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin: 0 20px 8px;
+  overflow: hidden; box-shadow: var(--card-shadow);
+}
+.day-block.exam-day { border-color: var(--accent); }
+.day-block.today-block { border-color: var(--warning); border-width: 2px; }
+.day-block.past-block { opacity: 0.65; }
+.day-header {
+  display: flex; align-items: center; gap: 10px; padding: 11px 15px;
+  cursor: pointer; user-select: none; transition: background 0.2s;
+}
+.day-header:hover { background: var(--bg2); }
+.day-date-col { min-width: 80px; }
+.day-dow { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); }
+.day-dmy { font-size: 12px; font-weight: 500; color: var(--text2); }
+.day-label { flex: 1; font-size: 12px; font-weight: 500; color: var(--text); }
+.day-prog-mini { width: 48px; height: 4px; background: var(--progress-track); border-radius: 4px; overflow: hidden; }
+.day-prog-fill { height: 100%; background: var(--progress-fill); border-radius: 4px; transition: width 0.5s; }
+.day-pct { font-size: 10px; color: var(--text3); min-width: 26px; text-align: right; }
+.day-exam-badge {
+  background: var(--accent-light); color: var(--tab-active-color);
+  font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 6px;
+  border: 1px solid var(--accent); white-space: nowrap;
+}
+.day-toggle { font-size: 11px; color: var(--text3); transition: transform 0.25s; margin-left: 4px; }
+.day-toggle.open { transform: rotate(180deg); }
+.day-body { display: none; border-top: 1px solid var(--border); padding: 12px 15px; }
+.day-body.open { display: block; animation: panelIn 0.2s ease; }
+
+/* ── TOPIC ROWS ── */
+.topic-row {
+  display: flex; align-items: flex-start; gap: 8px; padding: 5px 0;
+  border-bottom: 1px dashed var(--border); position: relative;
+}
+.topic-row:last-of-type { border-bottom: none; }
+.topic-check { width: 15px; height: 15px; min-width: 15px; accent-color: var(--accent); cursor: pointer; margin-top: 3px; }
+.topic-content { flex: 1; }
+.topic-text { font-size: 12px; color: var(--text); line-height: 1.45; transition: color 0.2s; }
+.topic-text.checked { text-decoration: line-through; color: var(--text3); }
+.topic-subtag { font-size: 9px; padding: 1px 6px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-color); font-weight: 600; margin-top: 3px; display: inline-block; }
+.topic-del { opacity: 0; cursor: pointer; font-size: 14px; color: var(--text3); padding: 0 4px; transition: opacity 0.2s; }
+.topic-row:hover .topic-del { opacity: 0.5; }
+.topic-del:hover { opacity: 1 !important; color: var(--danger); }
+
+/* ── ADD TASK ROW ── */
+.add-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.add-inp {
+  flex: 1; min-width: 140px; border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  padding: 7px 10px; font-size: 12px; background: var(--input-bg); color: var(--text);
+  font-family: var(--font-body); outline: none; transition: border-color 0.2s;
+}
+.add-inp:focus { border-color: var(--input-focus); }
+.add-inp::placeholder { color: var(--text3); }
+.add-sel {
+  border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  padding: 7px 8px; font-size: 11px; background: var(--input-bg); color: var(--text);
+  font-family: var(--font-body); outline: none;
+}
+
+/* ── DAY NOTES ── */
+.day-note-wrap { margin-top: 10px; }
+.day-note-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 4px; }
+.day-note-area {
+  width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 10px; font-size: 12px; background: var(--bg2); color: var(--text);
+  resize: vertical; min-height: 55px; outline: none; font-family: var(--font-body); line-height: 1.5;
+  transition: border-color 0.2s;
+}
+.day-note-area:focus { border-color: var(--input-focus); }
+
+/* ── SCORE SECTION ── */
+.score-wrap { margin-top: 10px; padding: 10px 12px; background: var(--bg2); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.score-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.score-label { font-size: 11px; color: var(--text2); }
+.score-inp { width: 60px; border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 5px 8px; font-size: 13px; font-weight: 500; text-align: center; background: var(--surface); color: var(--text); outline: none; font-family: var(--font-body); }
+.score-max { font-size: 11px; color: var(--text3); }
+.score-saved-disp { font-size: 12px; font-weight: 500; color: var(--success); }
+
+/* ═══════════════ SYLLABUS PANEL ═══════════════ */
+.mod-accordion { margin: 0 20px 8px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--card-shadow); }
+.mod-header { display: flex; align-items: center; gap: 10px; padding: 11px 15px; cursor: pointer; user-select: none; transition: background 0.2s; }
+.mod-header:hover { background: var(--bg2); }
+.mod-badge { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.mod-title { flex: 1; font-size: 12px; font-weight: 500; color: var(--text); }
+.mod-progress-text { font-size: 10px; color: var(--text3); }
+.mod-toggle { font-size: 11px; color: var(--text3); transition: transform 0.25s; }
+.mod-toggle.open { transform: rotate(180deg); }
+.mod-body { display: none; border-top: 1px solid var(--border); padding: 12px 15px; }
+.mod-body.open { display: block; animation: panelIn 0.2s; }
+.syl-check-list { list-style: none; margin-bottom: 10px; }
+.syl-check-list li { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px dashed var(--border); }
+.syl-check-list li:last-child { border-bottom: none; }
+.syl-check-list input[type=checkbox] { accent-color: var(--accent); margin-top: 3px; width: 14px; height: 14px; flex-shrink: 0; cursor: pointer; }
+.syl-check-list label { font-size: 12px; color: var(--text); cursor: pointer; line-height: 1.4; }
+.syl-check-list label.done { text-decoration: line-through; color: var(--text3); }
+.sub-note-area {
+  width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 10px; font-size: 12px; background: var(--bg2); color: var(--text);
+  resize: vertical; min-height: 60px; outline: none; font-family: var(--font-body); line-height: 1.5;
+  transition: border-color 0.2s;
+}
+.sub-note-area:focus { border-color: var(--input-focus); }
+.sub-section-head { display: flex; align-items: center; gap: 12px; margin: 16px 20px 8px; }
+.sub-section-head h3 { font-family: var(--font-display); font-size: 15px; font-weight: 500; }
+.sub-section-head::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+.add-topic-row { display: flex; gap: 6px; margin-top: 10px; }
+
+/* ═══════════════ NOTES PANEL ═══════════════ */
+.notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; padding: 0 20px 20px; }
+.note-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--card-shadow); }
+.note-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.note-card-label { font-size: 10px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; }
+.note-del-btn { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--text3); transition: color 0.2s; }
+.note-del-btn:hover { color: var(--danger); }
+.note-card-area {
+  width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font-size: 12px; background: var(--bg2); color: var(--text);
+  resize: vertical; min-height: 80px; outline: none; font-family: var(--font-body); line-height: 1.5;
+}
+.note-card-area:focus { border-color: var(--input-focus); }
+.note-card-date { font-size: 9px; color: var(--text3); margin-top: 6px; }
+.add-note-row { display: flex; gap: 8px; padding: 0 20px 14px; flex-wrap: wrap; }
+
+/* ═══════════════ MOTIVATION ═══════════════ */
+.motivation-wrap { margin: 0 20px 14px; }
+.motivation-box {
+  background: var(--accent3-light); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 16px; font-style: italic;
+  font-family: var(--font-display); font-size: 14px; color: var(--text2);
+  text-align: center; border-left: 3px solid var(--accent3);
+}
+
+/* ═══════════════ TOAST ═══════════════ */
+.toast {
+  position: fixed; bottom: 24px; right: 20px; background: var(--text); color: var(--bg);
+  padding: 10px 18px; border-radius: var(--radius-sm); font-size: 12px;
+  z-index: 999; transform: translateY(60px); opacity: 0; transition: all 0.3s; pointer-events: none;
+  font-family: var(--font-body); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ═══════════════ NERDY SCANLINE ═══════════════ */
+[data-theme="nerdy"] body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+}
+[data-theme="cars"] .hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, #ff4500, transparent);
+}
+[data-theme="avengers"] .hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #c00, #ffd700, #4080ff);
+}
+
+/* ═══════════════ MISC ═══════════════ */
+.tag { font-size: 9px; padding: 2px 7px; border-radius: 8px; font-weight: 600; background: var(--tag-bg); color: var(--tag-color); display: inline-block; }
+.empty-state { text-align: center; padding: 30px; color: var(--text3); font-style: italic; font-size: 13px; }
+.divider { height: 1px; background: var(--border); margin: 12px 0; }
+.badge-pill { font-size: 10px; padding: 3px 9px; border-radius: 12px; font-weight: 600; }
+.flex-gap { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ml-auto { margin-left: auto; }
+.text-sm { font-size: 11px; color: var(--text3); }
+</style>
+</head>
+<body data-theme="garden">
+
+<!-- ══ ONBOARDING ══ -->
+<div id="onboarding-screen">
+  <div class="onboard-card">
+    <div class="onboard-logo">✿ StudyBloom</div>
+    <div class="onboard-sub">Your personal exam planner — data stays only on your device 🔒</div>
+
+    <!-- STEP 1: Personal Info -->
+    <div class="onboard-step active" id="step-1">
+      <div class="step-title">Let's get to know you</div>
+      <div class="step-desc">Fill in your details — this sets up your personalised dashboard.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" id="ob-name" placeholder="e.g. Mariyam P" value="Mariyam P">
+        </div>
+        <div class="form-group">
+          <label class="form-label">College / Institution</label>
+          <input class="form-input" id="ob-college" placeholder="e.g. GEC Kozhikode" value="Govt. Engineering College Kozhikode">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">University</label>
+          <input class="form-input" id="ob-uni" placeholder="e.g. KTU" value="KTU">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Semester & Branch</label>
+          <input class="form-input" id="ob-sem" placeholder="e.g. S4 ECE" value="S4 ECE">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Current CGPA</label>
+          <input class="form-input" id="ob-cgpa" type="number" step="0.01" min="0" max="10" placeholder="e.g. 8.81" value="8.81">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target SGPA This Semester</label>
+          <input class="form-input" id="ob-target" placeholder="e.g. >9.0" value=">9.0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Past SGPAs <span class="text-sm">(add each semester)</span></label>
+        <div id="sgpa-fields" class="sgpa-fields"></div>
+        <button class="btn btn-secondary btn-sm add-sgpa-btn" onclick="addSGPAField()">+ Add Semester</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Subjects -->
+    <div class="onboard-step" id="step-2">
+      <div class="step-title">Your subjects & exams</div>
+      <div class="step-desc">Add each subject. You can mark less important ones to skip from the timetable.</div>
+      <div class="subject-forms" id="subject-forms"></div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:10px" onclick="addSubjectForm()">+ Add Subject</button>
+    </div>
+
+    <!-- STEP 3: Choose Theme -->
+    <div class="onboard-step" id="step-3">
+      <div class="step-title">Choose your vibe</div>
+      <div class="step-desc">Pick a theme — you can always change it later from the top bar.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:12px" id="theme-picker-grid"></div>
+    </div>
+
+    <div class="step-footer">
+      <div class="step-dots" id="step-dots"></div>
+      <div class="flex-gap">
+        <button class="btn btn-secondary" id="prev-btn" onclick="obPrev()" style="display:none">Back</button>
+        <button class="btn btn-primary" id="next-btn" onclick="obNext()">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="main-app" style="display:none">
+  <!-- Privacy Banner -->
+  <div class="privacy-banner" id="privacy-banner">
+    <span class="lock-icon">🔒</span>
+    <span>Your data is safe, stored only on your device, and is not monitored by anyone.</span>
+    <button onclick="document.getElementById('privacy-banner').style.display='none'">×</button>
+  </div>
+
+  <!-- Theme Bar -->
+  <div class="theme-bar">
+    <div class="theme-bar-left">
+      <div class="app-logo" id="app-logo">✿ StudyBloom</div>
+      <div id="user-greeting" style="font-size:12px;color:var(--text3)"></div>
+    </div>
+    <div class="flex-gap">
+      <div class="theme-select-wrap">
+        <label>Theme:</label>
+        <select class="theme-select" id="theme-select" onchange="setTheme(this.value)">
+          <option value="garden">🌸 Garden / Cottagecore</option>
+          <option value="whimsical">✨ Whimsical</option>
+          <option value="cars">🏎 Cars</option>
+          <option value="avengers">⚔ Avengers</option>
+          <option value="minimal">◻ Aesthetic Minimal</option>
+          <option value="nerdy">⌨ Nerdy</option>
+          <option value="cool">◈ Cool</option>
+        </select>
+      </div>
+      <button class="reset-btn" onclick="resetApp()">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero" id="hero-section">
+    <div class="hero-deco l" id="hero-deco-l">✿</div>
+    <div class="hero-deco r" id="hero-deco-r">❀</div>
+    <div class="hero-tag" id="hero-tag">semester 4 · ktu · govt. engineering college kozhikode</div>
+    <h1 id="hero-name">Mariyam's Exam Garden ✿</h1>
+    <div class="hero-sub" id="hero-sub">every topic learned is a step closer to that 9.0+ ✨</div>
+    <div class="sgpa-strip" id="sgpa-strip"></div>
+  </div>
+
+  <!-- Nav Tabs -->
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchTab('dashboard')"><span class="tab-icon">🏡</span>Dashboard</div>
+    <div class="nav-tab" onclick="switchTab('timetable')"><span class="tab-icon">📅</span>Timetable</div>
+    <div class="nav-tab" onclick="switchTab('syllabus')"><span class="tab-icon">📚</span>Syllabus</div>
+    <div class="nav-tab" onclick="switchTab('notes')"><span class="tab-icon">🌿</span>Notes</div>
+  </div>
+
+  <div class="app">
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div style="height:16px"></div>
+      <div class="motivation-wrap"><div class="motivation-box" id="motivation-box"></div></div>
+      <div class="sec-wrap"><div class="sec-head"><h2 id="cd-heading">⏳ countdown to exams</h2></div></div>
+      <div class="cd-scroll" id="cd-strip"></div>
+      <div class="sec-wrap"><div class="sec-head"><h2>🌸 subjects at a glance</h2></div>
+        <div class="sub-grid" id="sub-grid"></div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="sec-wrap"><div class="sec-head"><h2>📊 overall progress</h2></div></div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="sec-wrap"><div class="sec-head"><h2>🎯 target score calculator</h2></div></div>
+      <div class="calc-card card" style="margin:0 20px 20px" id="calc-card"></div>
+    </div>
+
+    <!-- TIMETABLE -->
+    <div class="panel" id="panel-timetable">
+      <div style="height:16px"></div>
+      <div class="sec-wrap"><div class="sec-head"><h2>📅 smart study timetable</h2></div></div>
+      <div id="timetable-wrap"></div>
+    </div>
+
+    <!-- SYLLABUS -->
+    <div class="panel" id="panel-syllabus">
+      <div style="height:16px"></div>
+      <div id="syllabus-wrap"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="panel" id="panel-notes">
+      <div style="height:16px"></div>
+      <div class="sec-wrap"><div class="sec-head"><h2>🌿 quick notes & references</h2></div></div>
+      <div class="add-note-row">
+        <input class="form-input" id="new-note-title" placeholder="Note title..." style="flex:1;min-width:130px">
+        <select class="add-sel" id="new-note-sub"></select>
+        <button class="btn btn-secondary btn-sm" onclick="addNote()">+ Add Note</button>
+      </div>
+      <div class="notes-grid" id="notes-grid"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+//  CONSTANTS & HELPERS
+// ═══════════════════════════════════════════
+const STORAGE_KEY = 'studybloom_v3';
+const THEMES_META = {
+  garden:   { label: '🌸 Garden',    deco: ['✿','❀'], logo: '✿ StudyBloom' },
+  whimsical:{ label: '✨ Whimsical', deco: ['★','⭐'], logo: '★ StudyBloom' },
+  cars:     { label: '🏎 Cars',      deco: ['⚡','🔥'], logo: '⚡ StudyBloom' },
+  avengers: { label: '⚔ Avengers',  deco: ['⚔','🛡'], logo: '⚔ StudyBloom' },
+  minimal:  { label: '◻ Minimal',   deco: ['—','·'],  logo: 'StudyBloom' },
+  nerdy:    { label: '⌨ Nerdy',     deco: ['>_','{}'], logo: '>_ StudyBloom' },
+  cool:     { label: '◈ Cool',      deco: ['◈','◆'],   logo: '◈ StudyBloom' }
+};
+const SUBJECT_COLORS = ['#d4728a','#8080f0','#60b4d8','#60c878','#e8a030','#e080c0','#40c8a0','#d06030'];
+
+const MOTIVATIONS = [
+  "Every formula you study today is an answer you'll have tomorrow. 🌸",
+  "You've climbed from 8.63 to 8.98 — 9.0 is just one more step. ✨",
+  "Hard days build the strongest students. Keep going. 💪",
+  "One module at a time. One day at a time. You've got this. 🌿",
+  "Your future self will thank you for what you do right now. ⭐",
+  "Consistency beats perfection. Show up today. 📚",
+  "Bloom where you are planted — and ace those exams. 🌺"
+];
+
+function fmtDate(ds) {
+  const d = new Date(ds);
+  return d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+function daysBetween(ds, from) {
+  const ref = from ? new Date(from) : new Date();
+  ref.setHours(0,0,0,0);
+  const d = new Date(ds);
+  d.setHours(0,0,0,0);
+  return Math.ceil((d - ref) / 86400000);
+}
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+function addDays(ds, n) {
+  const d = new Date(ds);
+  d.setDate(d.getDate() + n);
+  return d.toISOString().split('T')[0];
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2300);
+}
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let S = null; // global state
+
+function defaultState() {
+  return {
+    user: { name:'', college:'', uni:'', sem:'', cgpa:'', target:'', sgpas:[] },
+    subjects: [],
+    theme: 'garden',
+    timetableDays: [],
+    scores: {},
+    sylChecks: {},
+    dayNotes: {},
+    modNotes: {},
+    notes: [],
+    dayOpen: {},
+    modOpen: {}
+  };
+}
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); } catch(e) {}
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      S = JSON.parse(raw);
+      if (!S.sylChecks) S.sylChecks = {};
+      if (!S.dayNotes) S.dayNotes = {};
+      if (!S.modNotes) S.modNotes = {};
+      if (!S.notes) S.notes = [];
+      if (!S.dayOpen) S.dayOpen = {};
+      if (!S.modOpen) S.modOpen = {};
+      if (!S.scores) S.scores = {};
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// ═══════════════════════════════════════════
+//  TIMETABLE GENERATION
+// ═══════════════════════════════════════════
+function generateTimetable(subjects, existingDays) {
+  // sort subjects by exam date
+  const subs = subjects.filter(s => !s.skip && s.examDate).sort((a,b) => new Date(a.examDate) - new Date(b.examDate));
+  if (!subs.length) return [];
+
+  const today = todayStr();
+  const lastExam = subs[subs.length - 1].examDate;
+  const days = [];
+
+  let cur = today;
+  while (cur <= lastExam) {
+    const examToday = subs.find(s => s.examDate === cur);
+    const daysToFirst = daysBetween(subs[0].examDate, cur);
+
+    let label = '';
+    let examDay = false;
+    let examId = null;
+    let topics = [];
+
+    if (examToday) {
+      examDay = true;
+      examId = examToday.id;
+      label = `📝 EXAM — ${examToday.name}`;
+      // after exam, add prep for next
+      const nextIdx = subs.indexOf(examToday) + 1;
+      if (nextIdx < subs.length) {
+        const nxt = subs[nextIdx];
+        topics = [{ id: uid(), sub: nxt.id, text: `After exam: start ${nxt.name} — quick overview`, done: false }];
+      }
+    } else {
+      // Find what to study: days before first exam get blocked for first subject in final 2 days
+      // After an exam, study next exam subject only
+      const lastPastExam = [...subs].reverse().find(s => daysBetween(s.examDate, cur) < 0);
+      let studySub = null;
+
+      if (lastPastExam) {
+        const nextIdx = subs.indexOf(lastPastExam) + 1;
+        if (nextIdx < subs.length) studySub = subs[nextIdx];
+      } else {
+        // before any exams
+        const daysToEx = daysBetween(subs[0].examDate, cur);
+        if (daysToEx <= 2) {
+          studySub = subs[0]; // last 2 days = only first subject
+          label = `${studySub.name} — final prep 🌟`;
+        } else {
+          // allocate time across upcoming subjects proportionally
+          // primary = first, secondary = second
+          studySub = subs[0];
+        }
+      }
+
+      if (!label) {
+        label = studySub ? `Study — ${studySub.name}` : 'Study day';
+      }
+
+      if (studySub) {
+        topics = [
+          { id: uid(), sub: studySub.id, text: `${studySub.name}: review notes & key concepts`, done: false },
+          { id: uid(), sub: studySub.id, text: `${studySub.name}: solve PYQ problems`, done: false }
+        ];
+      }
+    }
+
+    // Try to preserve existing topics/notes for this date
+    const existing = existingDays ? existingDays.find(d => d.date === cur) : null;
+
+    days.push({
+      date: cur,
+      label: existing ? existing.label : label,
+      examDay,
+      examId,
+      topics: existing ? existing.topics : topics
+    });
+
+    cur = addDays(cur, 1);
+  }
+  return days;
+}
+
+function uid() {
+  return Math.random().toString(36).slice(2, 9);
+}
+
+// ═══════════════════════════════════════════
+//  ONBOARDING
+// ═══════════════════════════════════════════
+let obStep = 1;
+const OB_STEPS = 3;
+let obSgpaCount = 3;
+
+function initOnboarding() {
+  // Pre-fill SGPA fields
+  const sgpaDefaults = [['S1','8.63'],['S2','8.95'],['S3','8.98']];
+  const wrap = document.getElementById('sgpa-fields');
+  wrap.innerHTML = '';
+  sgpaDefaults.forEach(([sem, val]) => {
+    addSGPAField(sem, val);
+  });
+
+  // Pre-fill subjects
+  const subjectDefaults = [
+    { name:'Mathematics', int:'34', intMax:'40', extMax:'60', examDate:'2026-04-27', goal:"'S' Grade", skip:false },
+    { name:'Signals and Systems', int:'40', intMax:'40', extMax:'60', examDate:'2026-04-29', goal:'', skip:false },
+    { name:'Linear Integrated Circuits', int:'35', intMax:'40', extMax:'60', examDate:'2026-05-04', goal:'', skip:false },
+    { name:'Microcontrollers', int:'52', intMax:'60', extMax:'40', examDate:'2026-05-07', goal:'', skip:false },
+    { name:'Digital System and Design', int:'28', intMax:'30', extMax:'60', examDate:'2026-05-11', goal:'', skip:false },
+    { name:'Ethics', int:'', intMax:'50', extMax:'50', examDate:'', goal:'', skip:true }
+  ];
+  subjectDefaults.forEach(s => addSubjectForm(s));
+
+  // Theme picker
+  buildThemePicker();
+  updateStepDots();
+}
+
+function addSGPAField(sem, val) {
+  const wrap = document.getElementById('sgpa-fields');
+  const count = wrap.children.length + 1;
+  const div = document.createElement('div');
+  div.className = 'sgpa-field-row';
+  div.innerHTML = `<label>${sem || 'S'+count}:</label>
+    <input class="form-input" style="width:70px" type="number" step="0.01" min="0" max="10" placeholder="0.00" value="${val||''}">
+    <button class="btn btn-icon btn-danger" onclick="this.parentElement.remove()" style="padding:3px 7px;font-size:12px">×</button>`;
+  wrap.appendChild(div);
+}
+
+function addSubjectForm(data) {
+  const wrap = document.getElementById('subject-forms');
+  const id = uid();
+  const card = document.createElement('div');
+  card.className = 'subject-form-card';
+  card.dataset.id = id;
+  card.innerHTML = `
+    <div class="subject-form-title">Subject</div>
+    <button class="btn btn-danger btn-sm remove-sub" onclick="this.closest('.subject-form-card').remove()">Remove</button>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Subject Name</label>
+        <input class="form-input sf-name" placeholder="e.g. Mathematics" value="${data?.name||''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Exam Date</label>
+        <input class="form-input sf-date" type="date" value="${data?.examDate||''}">
+      </div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group">
+        <label class="form-label">Internal Scored</label>
+        <input class="form-input sf-int" type="number" placeholder="e.g. 34" value="${data?.int||''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Internal Max</label>
+        <input class="form-input sf-intmax" type="number" placeholder="e.g. 40" value="${data?.intMax||'40'}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">External Max</label>
+        <input class="form-input sf-extmax" type="number" placeholder="e.g. 60" value="${data?.extMax||'60'}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Goal (optional)</label>
+        <input class="form-input sf-goal" placeholder="e.g. Achieve 'S' Grade" value="${data?.goal||''}">
+      </div>
+      <div class="form-group" style="display:flex;align-items:center;gap:8px;padding-top:20px">
+        <input type="checkbox" id="skip-${id}" class="sf-skip" style="accent-color:var(--accent);width:15px;height:15px" ${data?.skip?'checked':''}>
+        <label for="skip-${id}" style="font-size:12px;color:var(--text2);cursor:pointer">Skip / Less Important</label>
+      </div>
+    </div>
+  `;
+  wrap.appendChild(card);
+}
+
+function buildThemePicker() {
+  const grid = document.getElementById('theme-picker-grid');
+  grid.innerHTML = '';
+  Object.entries(THEMES_META).forEach(([key, meta]) => {
+    const div = document.createElement('div');
+    div.style.cssText = `border:2px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;text-align:center;font-size:13px;transition:all 0.2s;background:var(--surface)`;
+    div.textContent = meta.label;
+    div.onclick = () => {
+      setTheme(key);
+      grid.querySelectorAll('div').forEach(d => d.style.borderColor = 'var(--border)');
+      div.style.borderColor = 'var(--accent)';
+    };
+    if (key === 'garden') div.style.borderColor = 'var(--accent)';
+    grid.appendChild(div);
+  });
+}
+
+function updateStepDots() {
+  const dots = document.getElementById('step-dots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= OB_STEPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === obStep ? ' active' : '');
+    dots.appendChild(d);
+  }
+  document.getElementById('prev-btn').style.display = obStep > 1 ? '' : 'none';
+  document.getElementById('next-btn').textContent = obStep === OB_STEPS ? '🌸 Start Planning!' : 'Next →';
+}
+
+function obNext() {
+  if (obStep === OB_STEPS) { finishOnboarding(); return; }
+  document.getElementById('step-'+obStep).classList.remove('active');
+  obStep++;
+  document.getElementById('step-'+obStep).classList.add('active');
+  updateStepDots();
+}
+function obPrev() {
+  document.getElementById('step-'+obStep).classList.remove('active');
+  obStep--;
+  document.getElementById('step-'+obStep).classList.add('active');
+  updateStepDots();
+}
+
+function finishOnboarding() {
+  // Collect user info
+  S = defaultState();
+  S.user.name = document.getElementById('ob-name').value.trim() || 'Student';
+  S.user.college = document.getElementById('ob-college').value.trim();
+  S.user.uni = document.getElementById('ob-uni').value.trim();
+  S.user.sem = document.getElementById('ob-sem').value.trim();
+  S.user.cgpa = document.getElementById('ob-cgpa').value.trim();
+  S.user.target = document.getElementById('ob-target').value.trim();
+
+  // SGPAs
+  document.querySelectorAll('#sgpa-fields .sgpa-field-row').forEach((row, i) => {
+    const lbl = row.querySelector('label').textContent.replace(':', '').trim();
+    const val = row.querySelector('input').value.trim();
+    if (val) S.user.sgpas.push({ sem: lbl, val });
+  });
+
+  // Subjects
+  S.subjects = [];
+  let colorIdx = 0;
+  document.querySelectorAll('.subject-form-card').forEach(card => {
+    const name = card.querySelector('.sf-name').value.trim();
+    if (!name) return;
+    S.subjects.push({
+      id: card.dataset.id,
+      name,
+      int: parseFloat(card.querySelector('.sf-int').value) || 0,
+      intMax: parseFloat(card.querySelector('.sf-intmax').value) || 40,
+      extMax: parseFloat(card.querySelector('.sf-extmax').value) || 60,
+      examDate: card.querySelector('.sf-date').value || '',
+      goal: card.querySelector('.sf-goal').value.trim(),
+      skip: card.querySelector('.sf-skip').checked,
+      color: SUBJECT_COLORS[colorIdx++ % SUBJECT_COLORS.length],
+      modules: []
+    });
+  });
+
+  S.theme = document.querySelector('body').dataset.theme || 'garden';
+  S.timetableDays = generateTimetable(S.subjects, []);
+  save();
+  launchApp();
+}
+
+// ═══════════════════════════════════════════
+//  APP LAUNCH
+// ═══════════════════════════════════════════
+function launchApp() {
+  document.getElementById('onboarding-screen').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  setTheme(S.theme, true);
+  populateHero();
+  populateNotesSubSelect();
+  buildDashboard();
+}
+
+function populateHero() {
+  const u = S.user;
+  document.getElementById('hero-tag').textContent = `${u.sem} · ${u.uni} · ${u.college}`.toLowerCase();
+  document.getElementById('hero-name').textContent = `${u.name.split(' ')[0]}'s Exam Planner`;
+  document.getElementById('hero-sub').textContent = `target: ${u.target} ${u.target.includes('9') ? '✨' : '🌸'}`;
+  document.getElementById('user-greeting').textContent = `Hi, ${u.name.split(' ')[0]}!`;
+
+  const strip = document.getElementById('sgpa-strip');
+  strip.innerHTML = '';
+  u.sgpas.forEach(s => {
+    strip.innerHTML += `<div class="sgpa-pill">${s.sem} <strong>${s.val}</strong></div>`;
+  });
+  if (u.cgpa) strip.innerHTML += `<div class="sgpa-pill">CGPA <strong>${u.cgpa}</strong></div>`;
+  if (u.target) strip.innerHTML += `<div class="sgpa-pill target">Target <strong>${u.target}</strong></div>`;
+}
+
+function populateNotesSubSelect() {
+  const sel = document.getElementById('new-note-sub');
+  sel.innerHTML = '<option value="general">General</option>';
+  S.subjects.forEach(s => {
+    sel.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+  });
+}
+
+// ═══════════════════════════════════════════
+//  THEME
+// ═══════════════════════════════════════════
+function setTheme(theme, skipSave) {
+  document.body.dataset.theme = theme;
+  if (document.getElementById('theme-select')) {
+    document.getElementById('theme-select').value = theme;
+  }
+  const meta = THEMES_META[theme];
+  if (meta) {
+    const dl = document.getElementById('hero-deco-l');
+    const dr = document.getElementById('hero-deco-r');
+    const logo = document.getElementById('app-logo');
+    if (dl) dl.textContent = meta.deco[0];
+    if (dr) dr.textContent = meta.deco[1];
+    if (logo) logo.textContent = meta.logo;
+  }
+  if (S) { S.theme = theme; if (!skipSave) save(); }
+}
+
+// ═══════════════════════════════════════════
+//  TAB SWITCHING
+// ═══════════════════════════════════════════
+function switchTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  const tabs = ['dashboard', 'timetable', 'syllabus', 'notes'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(id)].classList.add('active');
+  if (id === 'dashboard') buildDashboard();
+  if (id === 'timetable') buildTimetable();
+  if (id === 'syllabus') buildSyllabus();
+  if (id === 'notes') buildNotes();
+}
+
+// ═══════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════
+function buildDashboard() {
+  buildMotivation();
+  buildCountdown();
+  buildSubGrid();
+  buildStats();
+  buildCalcCard();
+}
+
+function buildMotivation() {
+  const el = document.getElementById('motivation-box');
+  if (!el) return;
+  el.textContent = MOTIVATIONS[new Date().getDate() % MOTIVATIONS.length];
+}
+
+function buildCountdown() {
+  const el = document.getElementById('cd-strip');
+  if (!el) return;
+  el.innerHTML = '';
+  const activeSubs = S.subjects.filter(s => !s.skip && s.examDate).sort((a,b) => new Date(a.examDate) - new Date(b.examDate));
+  if (!activeSubs.length) { el.innerHTML = '<div class="empty-state">No exam dates set yet.</div>'; return; }
+
+  const today = todayStr();
+  const upcoming = activeSubs.filter(s => s.examDate >= today);
+
+  activeSubs.forEach(ex => {
+    const days = daysBetween(ex.examDate);
+    const done = days < 0;
+    const isNext = !done && upcoming[0] && upcoming[0].id === ex.id;
+    const isToday = days === 0;
+    const sc = S.scores[ex.id];
+    const card = document.createElement('div');
+    card.className = 'cd-card' + (isNext ? ' next' : '') + (done ? ' done' : '') + (isToday ? ' today' : '');
+    let inner = '';
+    if (done) {
+      inner = `<div class="cd-num">✅</div><div class="cd-unit">done</div><div class="cd-subj">${ex.name.split(' ')[0]}</div>`;
+      if (sc) inner += `<div class="cd-score-disp">${sc}/${ex.extMax}</div>`;
+    } else if (isToday) {
+      inner = `<div class="cd-num" style="font-size:18px">TODAY!</div><div class="cd-unit">exam day</div><div class="cd-subj">${ex.name.split(' ')[0]}</div>`;
+    } else {
+      inner = `<div class="cd-num">${days}</div><div class="cd-unit">days left</div><div class="cd-subj">${ex.name.split(' ')[0]}</div><div class="cd-date">${fmtDate(ex.examDate)}</div>`;
+    }
+    card.innerHTML = inner;
+    el.appendChild(card);
+  });
+}
+
+function subSylProgress(subId) {
+  const sub = S.subjects.find(s => s.id === subId);
+  if (!sub || !sub.modules || !sub.modules.length) return 0;
+  let total = 0, done = 0;
+  sub.modules.forEach((m, mi) => {
+    (m.topics || []).forEach((t, ti) => {
+      total++;
+      if (S.sylChecks[`${subId}_${mi}_${ti}`]) done++;
+    });
+  });
+  return total ? Math.round(done / total * 100) : 0;
+}
+
+function buildSubGrid() {
+  const el = document.getElementById('sub-grid');
+  if (!el) return;
+  el.innerHTML = '';
+  const active = S.subjects.filter(s => !s.skip && s.examDate);
+  if (!active.length) { el.innerHTML = '<div class="empty-state">Add subjects in the timetable panel.</div>'; return; }
+  active.sort((a,b) => new Date(a.examDate) - new Date(b.examDate)).forEach(ex => {
+    const prog = subSylProgress(ex.id);
+    const sc = S.scores[ex.id];
+    const card = document.createElement('div');
+    card.className = 'sub-card';
+    card.onclick = () => { switchTab('syllabus'); setTimeout(() => scrollToSub(ex.id), 120); };
+    card.innerHTML = `
+      <div class="sub-card-accent" style="background:${ex.color}"></div>
+      ${ex.goal ? `<div class="sub-goal-badge">★ ${ex.goal}</div>` : ''}
+      <h4>${ex.name}</h4>
+      <div class="int-marks">Internal: <b>${ex.int}/${ex.intMax}</b>${sc ? ` · Ext: <b style="color:var(--success)">${sc}/${ex.extMax}</b>` : ''}</div>
+      <div class="sub-prog-bar"><div class="sub-prog-fill" style="width:${prog}%"></div></div>
+      <div class="sub-prog-pct">Syllabus ${prog}% checked</div>
+      <div class="sub-exam-dt">Exam: ${fmtDate(ex.examDate)}</div>
+    `;
+    el.appendChild(card);
+  });
+}
+
+function buildStats() {
+  const el = document.getElementById('stats-grid');
+  if (!el) return;
+  let total = 0, done = 0;
+  S.timetableDays.forEach((d, di) => {
+    const day = S.timetableDays[di];
+    (day.topics || []).forEach(t => { total++; if (t.done) done++; });
+  });
+  const prog = total ? Math.round(done / total * 100) : 0;
+  const today = todayStr();
+  const daysLeft = S.timetableDays.filter(d => d.date >= today).length;
+  const exDone = S.subjects.filter(s => !s.skip && s.examDate && s.examDate < today).length;
+  const exTotal = S.subjects.filter(s => !s.skip && s.examDate).length;
+  el.innerHTML = `
+    <div class="stat-card"><div class="stat-num">${daysLeft}</div><div class="stat-label">days left</div></div>
+    <div class="stat-card"><div class="stat-num">${prog}%</div><div class="stat-label">tasks done</div></div>
+    <div class="stat-card"><div class="stat-num">${exDone}/${exTotal}</div><div class="stat-label">exams cleared</div></div>
+    <div class="stat-card"><div class="stat-num">${done}</div><div class="stat-label">topics ticked</div></div>
+  `;
+}
+
+function buildCalcCard() {
+  const el = document.getElementById('calc-card');
+  if (!el) return;
+  const active = S.subjects.filter(s => !s.skip && s.examDate).sort((a,b) => new Date(a.examDate) - new Date(b.examDate));
+  if (!active.length) { el.innerHTML = '<div class="empty-state">No subjects added yet.</div>'; return; }
+  let html = '<h4>🎯 What you need to score externally</h4>';
+  active.forEach(ex => {
+    const sc = S.scores[ex.id];
+    const totalMax = ex.intMax + ex.extMax;
+    const sNeed = Math.max(0, Math.ceil(totalMax * 0.9) - ex.int);
+    const aNeed = Math.max(0, Math.ceil(totalMax * 0.8) - ex.int);
+    const bNeed = Math.max(0, Math.ceil(totalMax * 0.7) - ex.int);
+    html += `<div class="calc-row">
+      <div class="calc-subj">${ex.name}</div>
+      ${sc
+        ? `<span class="grade-badge grade-done">Done: ${sc}/${ex.extMax}</span>`
+        : `<span class="grade-badge grade-s">S: ${sNeed}/${ex.extMax}</span>
+           <span class="grade-badge grade-a">A: ${aNeed}/${ex.extMax}</span>
+           <span class="grade-badge grade-b">B: ${bNeed}/${ex.extMax}</span>`
+      }
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+//  TIMETABLE
+// ═══════════════════════════════════════════
+function buildTimetable() {
+  const wrap = document.getElementById('timetable-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  if (!S.timetableDays.length) {
+    wrap.innerHTML = '<div class="empty-state" style="padding:40px">No timetable generated yet. Make sure subjects have exam dates.</div>';
+    return;
+  }
+  const today = todayStr();
+  S.timetableDays.forEach((day, di) => {
+    const days = daysBetween(day.date);
+    const isToday = day.date === today;
+    const isPast = days < 0;
+    const prog = day.topics && day.topics.length ? Math.round(day.topics.filter(t=>t.done).length / day.topics.length * 100) : 0;
+    const isOpen = S.dayOpen[di] !== undefined ? S.dayOpen[di] : isToday;
+
+    const block = document.createElement('div');
+    block.className = 'day-block' + (day.examDay ? ' exam-day' : '') + (isToday ? ' today-block' : '') + (isPast ? ' past-block' : '');
+    block.id = 'dayblock-' + di;
+
+    const examEx = day.examId ? S.subjects.find(s => s.id === day.examId) : null;
+    block.innerHTML = `
+      <div class="day-header" onclick="toggleDay(${di})">
+        <div class="day-date-col">
+          <div class="day-dow">${fmtDate(day.date).split(',')[0]}${isToday ? ' · today' : ''}</div>
+          <div class="day-dmy">${fmtDate(day.date).replace(/^[^,]+,\s*/, '')}</div>
+        </div>
+        <div class="day-label">${day.label}</div>
+        ${day.examDay ? `<div class="day-exam-badge">EXAM</div>` : ''}
+        <div class="day-prog-mini"><div class="day-prog-fill" style="width:${prog}%"></div></div>
+        <div class="day-pct">${prog}%</div>
+        <div class="day-toggle${isOpen ? ' open' : ''}">▼</div>
+      </div>
+      <div class="day-body${isOpen ? ' open' : ''}" id="daybody-${di}"></div>
+    `;
+    wrap.appendChild(block);
+    renderDayBody(di);
+  });
+}
+
+function renderDayBody(di) {
+  const body = document.getElementById('daybody-' + di);
+  if (!body) return;
+  const day = S.timetableDays[di];
+  const examEx = day.examId ? S.subjects.find(s => s.id === day.examId) : null;
+  const sc = examEx && S.scores[examEx.id];
+
+  let html = '<div id="topics-list-' + di + '">';
+  (day.topics || []).forEach((t, ti) => {
+    const sub = S.subjects.find(s => s.id === t.sub);
+    html += `<div class="topic-row">
+      <input type="checkbox" class="topic-check" ${t.done ? 'checked' : ''} onchange="toggleTask(${di},${ti},this.checked)">
+      <div class="topic-content">
+        <div class="topic-text${t.done ? ' checked' : ''}">${t.text}</div>
+        ${sub ? `<span class="topic-subtag" style="background:${sub.color}22;color:${sub.color}">${sub.name.split(' ')[0].toUpperCase()}</span>` : ''}
+      </div>
+      <span class="topic-del" onclick="delTask(${di},${ti})">×</span>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Add task row
+  const subOpts = S.subjects.filter(s => !s.skip).map(s => `<option value="${s.id}">${s.name.split(' ')[0]}</option>`).join('');
+  html += `<div class="add-row">
+    <input class="add-inp" id="addinp-${di}" placeholder="+ add a task..." onkeydown="if(event.key==='Enter')addTask(${di})">
+    <select class="add-sel" id="addsel-${di}">${subOpts}</select>
+    <button class="btn btn-secondary btn-sm" onclick="addTask(${di})">Add</button>
+  </div>`;
+
+  // Day label edit
+  html += `<div style="display:flex;gap:6px;margin-top:8px;align-items:center">
+    <span style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;white-space:nowrap">Day label:</span>
+    <input class="add-inp" value="${day.label.replace(/"/g,'&quot;')}" onblur="saveDayLabel(${di},this.value)" style="font-size:11px">
+  </div>`;
+
+  // Day note
+  html += `<div class="day-note-wrap">
+    <div class="day-note-label">📝 notes for this day</div>
+    <textarea class="day-note-area" onblur="saveDayNote(${di},this.value)" placeholder="Reminders, tips, anything you want to note...">${S.dayNotes[di] || ''}</textarea>
+  </div>`;
+
+  // Exam score
+  if (examEx) {
+    if (sc !== undefined) {
+      html += `<div class="score-wrap"><div class="score-row"><span class="score-label">Exam score saved:</span><span class="score-saved-disp">🌸 ${sc} / ${examEx.extMax} (external)</span><button class="btn btn-danger btn-sm" onclick="clearScore('${examEx.id}',${di})">Clear</button></div></div>`;
+    } else {
+      html += `<div class="score-wrap">
+        <div class="score-row">
+          <span class="score-label">Log your exam score:</span>
+          <input type="number" class="score-inp" id="scoreinp-${di}" min="0" max="${examEx.extMax}" placeholder="0">
+          <span class="score-max">/ ${examEx.extMax}</span>
+          <button class="btn btn-secondary btn-sm" onclick="saveScore(${di},'${examEx.id}',${examEx.extMax})">Save ✿</button>
+        </div>
+      </div>`;
+    }
+  }
+
+  body.innerHTML = html;
+}
+
+function toggleDay(di) {
+  S.dayOpen[di] = !S.dayOpen[di];
+  const body = document.getElementById('daybody-' + di);
+  const tog = document.querySelector('#dayblock-' + di + ' .day-toggle');
+  if (body) body.className = 'day-body' + (S.dayOpen[di] ? ' open' : '');
+  if (tog) tog.className = 'day-toggle' + (S.dayOpen[di] ? ' open' : '');
+  save();
+}
+
+function toggleTask(di, ti, val) {
+  S.timetableDays[di].topics[ti].done = val;
+  save();
+  // update progress bar
+  const day = S.timetableDays[di];
+  const prog = day.topics.length ? Math.round(day.topics.filter(t => t.done).length / day.topics.length * 100) : 0;
+  const fill = document.querySelector('#dayblock-' + di + ' .day-prog-fill');
+  const pct = document.querySelector('#dayblock-' + di + ' .day-pct');
+  if (fill) fill.style.width = prog + '%';
+  if (pct) pct.textContent = prog + '%';
+  const txt = document.querySelector(`#daybody-${di} .topic-row:nth-child(${ti+1}) .topic-text`);
+  if (txt) txt.className = 'topic-text' + (val ? ' checked' : '');
+  buildStats(); buildSubGrid();
+  showToast(val ? '✅ Task done!' : '↩ Unmarked');
+}
+
+function addTask(di) {
+  const inp = document.getElementById('addinp-' + di);
+  const sel = document.getElementById('addsel-' + di);
+  if (!inp || !inp.value.trim()) return;
+  S.timetableDays[di].topics.push({ id: uid(), sub: sel ? sel.value : '', text: inp.value.trim(), done: false });
+  save();
+  inp.value = '';
+  renderDayBody(di);
+  buildStats();
+  showToast('Task added! 🌿');
+}
+
+function delTask(di, ti) {
+  S.timetableDays[di].topics.splice(ti, 1);
+  save();
+  renderDayBody(di);
+  buildStats();
+}
+
+function saveDayNote(di, val) {
+  S.dayNotes[di] = val;
+  save();
+}
+function saveDayLabel(di, val) {
+  S.timetableDays[di].label = val;
+  save();
+  showToast('Label saved ✿');
+}
+
+function saveScore(di, examId, max) {
+  const inp = document.getElementById('scoreinp-' + di);
+  if (!inp) return;
+  const val = parseFloat(inp.value);
+  if (isNaN(val) || val < 0 || val > max) { showToast('❌ Invalid score'); return; }
+  S.scores[examId] = val;
+  save();
+  renderDayBody(di);
+  buildCountdown(); buildSubGrid(); buildCalcCard();
+  showToast('Score saved! 🌸');
+}
+function clearScore(examId, di) {
+  delete S.scores[examId];
+  save();
+  renderDayBody(di);
+  buildCountdown(); buildSubGrid(); buildCalcCard();
+}
+
+// ═══════════════════════════════════════════
+//  SYLLABUS
+// ═══════════════════════════════════════════
+function scrollToSub(id) {
+  const el = document.getElementById('sylsec-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildSyllabus() {
+  const wrap = document.getElementById('syllabus-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const active = S.subjects.filter(s => !s.skip).sort((a,b) => new Date(a.examDate||'9999') - new Date(b.examDate||'9999'));
+  if (!active.length) { wrap.innerHTML = '<div class="empty-state" style="padding:40px">No subjects found.</div>'; return; }
+
+  active.forEach(sub => {
+    const sec = document.createElement('div');
+    sec.id = 'sylsec-' + sub.id;
+    const prog = subSylProgress(sub.id);
+    sec.innerHTML = `
+      <div class="sub-section-head">
+        <h3 style="color:${sub.color}">${sub.name}</h3>
+        <span class="text-sm">Exam: ${sub.examDate ? fmtDate(sub.examDate) : '—'} · Internal: ${sub.int}/${sub.intMax} · Syllabus: ${prog}%</span>
+      </div>
+    `;
+
+    if (!sub.modules || !sub.modules.length) {
+      // Show add-module form
+      const noMod = document.createElement('div');
+      noMod.style.cssText = 'margin:0 20px 14px;';
+      noMod.innerHTML = `
+        <div style="background:var(--surface);border:1px dashed var(--border2);border-radius:var(--radius);padding:16px;text-align:center">
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">No syllabus added yet. Add modules and topics.</div>
+          <button class="btn btn-secondary btn-sm" onclick="addModule('${sub.id}')">+ Add Module</button>
+        </div>
+      `;
+      sec.appendChild(noMod);
+    } else {
+      sub.modules.forEach((mod, mi) => {
+        const modKey = `${sub.id}_${mi}`;
+        const isOpen = S.modOpen[modKey];
+        const topicsDone = (mod.topics || []).filter((_,ti) => S.sylChecks[`${sub.id}_${mi}_${ti}`]).length;
+        const acc = document.createElement('div');
+        acc.className = 'mod-accordion';
+        acc.id = 'modacc-' + modKey;
+        acc.innerHTML = `
+          <div class="mod-header" onclick="toggleMod('${modKey}')">
+            <div class="mod-badge" style="background:${sub.color}22;color:${sub.color}">M${mi+1}</div>
+            <div class="mod-title">${mod.title || 'Module ' + (mi+1)}</div>
+            <div class="mod-progress-text">${topicsDone}/${(mod.topics||[]).length}</div>
+            <div class="mod-toggle${isOpen ? ' open' : ''}" id="mogtog-${modKey}">▼</div>
+          </div>
+          <div class="mod-body${isOpen ? ' open' : ''}" id="modbody-${modKey}"></div>
+        `;
+        sec.appendChild(acc);
+        renderModBody(sub.id, mi, mod, modKey);
+      });
+
+      const addModBtn = document.createElement('div');
+      addModBtn.style.cssText = 'margin:0 20px 4px;text-align:right';
+      addModBtn.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="addModule('${sub.id}')">+ Add Module</button>`;
+      sec.appendChild(addModBtn);
+    }
+    wrap.appendChild(sec);
+  });
+}
+
+function renderModBody(subId, mi, mod, modKey) {
+  const body = document.getElementById('modbody-' + modKey);
+  if (!body) return;
+  let html = `<ul class="syl-check-list" id="syllist-${modKey}">`;
+  (mod.topics || []).forEach((t, ti) => {
+    const key = `${subId}_${mi}_${ti}`;
+    const checked = S.sylChecks[key] || false;
+    html += `<li>
+      <input type="checkbox" id="syc-${key}" ${checked ? 'checked' : ''} onchange="toggleSylCheck('${key}','${modKey}',${mi},'${subId}',${(mod.topics||[]).length},this.checked)">
+      <label for="syc-${key}" class="${checked ? 'done' : ''}">${t}</label>
+      <span class="topic-del" onclick="delSylTopic('${subId}',${mi},${ti},'${modKey}')" style="margin-left:auto;opacity:0.4">×</span>
+    </li>`;
+  });
+  html += '</ul>';
+  html += `<div class="add-topic-row">
+    <input class="add-inp" id="syladdinp-${modKey}" placeholder="+ add a topic..." onkeydown="if(event.key==='Enter')addSylTopic('${subId}',${mi},'${modKey}')">
+    <button class="btn btn-secondary btn-sm" onclick="addSylTopic('${subId}',${mi},'${modKey}')">Add</button>
+  </div>
+  <div style="margin-top:10px">
+    <div class="day-note-label">Module notes</div>
+    <textarea class="sub-note-area" onblur="saveModNote('${modKey}',this.value)" placeholder="Formulas, key concepts...">${S.modNotes[modKey] || ''}</textarea>
+  </div>`;
+  body.innerHTML = html;
+}
+
+function toggleMod(modKey) {
+  S.modOpen[modKey] = !S.modOpen[modKey];
+  const body = document.getElementById('modbody-' + modKey);
+  const tog = document.getElementById('mogtog-' + modKey);
+  if (body) body.className = 'mod-body' + (S.modOpen[modKey] ? ' open' : '');
+  if (tog) tog.className = 'mod-toggle' + (S.modOpen[modKey] ? ' open' : '');
+  save();
+}
+
+function toggleSylCheck(key, modKey, mi, subId, total, val) {
+  S.sylChecks[key] = val;
+  save();
+  const lbl = document.querySelector(`label[for="syc-${key}"]`);
+  if (lbl) lbl.className = val ? 'done' : '';
+  // Update count
+  const done = Array.from({ length: total }, (_, ti) => S.sylChecks[`${subId}_${mi}_${ti}`]).filter(Boolean).length;
+  const progText = document.querySelector(`#modacc-${modKey} .mod-progress-text`);
+  if (progText) progText.textContent = `${done}/${total}`;
+  buildSubGrid();
+  showToast(val ? 'Topic checked ✿' : 'Unchecked');
+}
+
+function addSylTopic(subId, mi, modKey) {
+  const inp = document.getElementById('syladdinp-' + modKey);
+  if (!inp || !inp.value.trim()) return;
+  const sub = S.subjects.find(s => s.id === subId);
+  if (!sub) return;
+  if (!sub.modules[mi].topics) sub.modules[mi].topics = [];
+  sub.modules[mi].topics.push(inp.value.trim());
+  save();
+  inp.value = '';
+  renderModBody(subId, mi, sub.modules[mi], modKey);
+  showToast('Topic added! 🌿');
+}
+
+function delSylTopic(subId, mi, ti, modKey) {
+  const sub = S.subjects.find(s => s.id === subId);
+  if (!sub) return;
+  sub.modules[mi].topics.splice(ti, 1);
+  // shift checks
+  const newChecks = {};
+  Object.keys(S.sylChecks).forEach(k => {
+    if (!k.startsWith(`${subId}_${mi}_`)) { newChecks[k] = S.sylChecks[k]; return; }
+    const tIdx = parseInt(k.split('_')[2]);
+    if (tIdx < ti) newChecks[k] = S.sylChecks[k];
+    else if (tIdx > ti) newChecks[`${subId}_${mi}_${tIdx-1}`] = S.sylChecks[k];
+  });
+  S.sylChecks = newChecks;
+  save();
+  renderModBody(subId, mi, sub.modules[mi], modKey);
+}
+
+function addModule(subId) {
+  const sub = S.subjects.find(s => s.id === subId);
+  if (!sub) return;
+  const title = prompt('Module title (e.g. Module 1 — Introduction):');
+  if (!title) return;
+  if (!sub.modules) sub.modules = [];
+  sub.modules.push({ title, topics: [] });
+  save();
+  buildSyllabus();
+  showToast('Module added! 📚');
+}
+
+function saveModNote(modKey, val) {
+  S.modNotes[modKey] = val;
+  save();
+}
+
+// ═══════════════════════════════════════════
+//  NOTES
+// ═══════════════════════════════════════════
+function buildNotes() {
+  const el = document.getElementById('notes-grid');
+  if (!el) return;
+  el.innerHTML = '';
+  if (!S.notes.length) {
+    el.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No notes yet. Add your first one above! 🌿</div>';
+    return;
+  }
+  S.notes.forEach((n, i) => {
+    const sub = S.subjects.find(s => s.id === n.sub);
+    const card = document.createElement('div');
+    card.className = 'note-card';
+    card.innerHTML = `
+      <div class="note-card-head">
+        <div class="note-card-label" style="color:${sub ? sub.color : 'var(--text2)'}">${n.title}${sub ? ' · ' + sub.name.split(' ')[0] : ''}</div>
+        <button class="note-del-btn" onclick="delNote(${i})">×</button>
+      </div>
+      <textarea class="note-card-area" onblur="saveNoteContent(${i},this.value)">${n.content || ''}</textarea>
+      <div class="note-card-date">${n.date}</div>
+    `;
+    el.appendChild(card);
+  });
+}
+
+function addNote() {
+  const title = document.getElementById('new-note-title').value.trim();
+  const sub = document.getElementById('new-note-sub').value;
+  if (!title) { showToast('Please enter a title'); return; }
+  S.notes.push({ title, sub, content: '', date: new Date().toLocaleDateString('en-IN') });
+  document.getElementById('new-note-title').value = '';
+  save();
+  buildNotes();
+  showToast('Note added! 🌿');
+}
+function delNote(i) {
+  if (!confirm('Delete this note?')) return;
+  S.notes.splice(i, 1);
+  save();
+  buildNotes();
+}
+function saveNoteContent(i, val) {
+  S.notes[i].content = val;
+  save();
+}
+
+// ═══════════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════════
+function resetApp() {
+  if (!confirm('Reset everything and start over?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+(function init() {
+  if (load()) {
+    setTheme(S.theme, true);
+    launchApp();
+  } else {
+    // Show onboarding
+    document.getElementById('main-app').style.display = 'none';
+    document.getElementById('onboarding-screen').style.display = 'flex';
+    initOnboarding();
+  }
+})();
+</script>
+</body>
+</html>
