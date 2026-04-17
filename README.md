@@ -13,7 +13,4 @@ I built this tool to manage my **Semester 4 Electronics and Communication Engine
 #🔒 Privacy
 This app uses **Local Storage**. All data you enter stays on your own device and is not uploaded to any server or monitored by any third party.
 
-# 🛠 Tech Stack
-* HTML5
-* CSS3 (Custom Theme System)
-* JavaScript (Vanilla)
+
